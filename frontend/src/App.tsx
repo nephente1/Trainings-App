@@ -5,7 +5,7 @@ import { Navbar } from './components/Navbar';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { useAuthContext } from './components/useAuthContext';
-import { Niespodzianka } from './pages/Bonus';
+import { Bonus } from './pages/Bonus';
 
 
 function App() {
@@ -30,8 +30,8 @@ function App() {
               element={!user ? <Signup /> : <Navigate to='/login' />} 
             />
             <Route 
-              path="/niespodzianka" 
-              element={user ? <Niespodzianka /> : <Navigate to='/login' />} 
+              path="/bonus" 
+              element={user ? <Bonus /> : <Navigate to='/login' />} 
             />
           </Routes>
         </div>
