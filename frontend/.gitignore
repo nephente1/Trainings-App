@@ -4,7 +4,7 @@
 node_modules
 /.pnp
 .pnp.js
-komendy_instalacyjne
+komendy_instalacyjne.txt
 
 # testing
 /coverage
