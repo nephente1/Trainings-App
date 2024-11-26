@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { useLogout } from "./useLogout";
 import { useAuthContext } from "./useAuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export const Navbar = () => {
   const { logout } = useLogout();
@@ -12,8 +11,8 @@ export const Navbar = () => {
     logout();
   }
 
-  const handleNiespodziankaClick = () => {
-    navigate("/niespodzianka")
+  const handleProfileClick = () => {
+    navigate("/profile")
   }
 
   return(
@@ -26,8 +25,8 @@ export const Navbar = () => {
           {user && (
             <div>
               <span>{user.email}</span>
+              <button onClick={handleProfileClick}>My Profile</button>
               <button onClick={handleClick}>Log out</button>
-              <button onClick={handleNiespodziankaClick}>Odbierz niespodziankę</button>
             </div>
           )}
         </nav>

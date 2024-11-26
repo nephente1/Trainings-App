@@ -1,58 +1,59 @@
 import { useState } from 'react';
-import { useWorkoutsContext } from './useWorkoutsContext';
 import { useAuthContext } from './useAuthContext';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { BackendError, createItemFetchRequest, WorkoutTypes } from '../api/api';
 
 export const Form = () => {
-
-  //@ts-ignore
-  const { dispatch } = useWorkoutsContext();
   const { user } = useAuthContext();
   const [title, setTitle] = useState('')
-  const [load, setLoad] = useState('')
-  const [reps, setReps] = useState('')
-  const [error, setError] = useState(null)
+  const [load, setLoad] = useState(null)
+  const [reps, setReps] = useState(null)
+  const [date, setDate] = useState<Date | string>(() => {
+    // Ustawiamy dzisiejszą datę w formacie 'YYYY-MM-DD'
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }
+  )
+  const [errorSet, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
+  const queryClient = useQueryClient();
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    if (!user) {
-      setError('You must log in')
-      return
-    }
-
-    const workout = {title, load, reps }
-
-    const response = await fetch('/api/workouts', {
-      method: 'POST',
-      body: JSON.stringify(workout),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`
-      }
-    })
-    const json = await response.json()
-
-    console.log('json', json)
-
-    if (!response.ok) {
-      setError(json.error)
-      setEmptyFields(json.emptyFields)
-    }
-    if (response.ok) {
+  const createItemMutation = useMutation({ 
+    mutationFn: (obj: WorkoutTypes) => createItemFetchRequest(obj),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['workouts'] })
       setError(null)
       setTitle('')
       setLoad('')
       setReps('')
       setEmptyFields([])
-      dispatch({type: 'CREATE_WORKOUT', payload: json})
+    },
+    onError: (error: BackendError) => {
+        console.error(`Error from backend: ${error.error}`);
+        console.error("Empty Fields:", error.emptyFields); // Log the missing fields
+   
+        setEmptyFields(error.emptyFields)
+        setError(error.error)
+    },
+  })
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (!user) {
+      setError('You must log in')
+      return
     }
-
+    const obj: WorkoutTypes = {
+      title: title,
+      load: load,
+      reps: reps,
+      date: date,
+    }
+    createItemMutation.mutate(obj);
   }
 
   return (
     <form className="create" onSubmit={handleSubmit}> 
       <h3>Add a New Workout</h3>
-
       <label>Excersize Title:</label>
       <input 
         type="text" 
@@ -76,9 +77,14 @@ export const Form = () => {
         value={reps}
         className={emptyFields?.includes('reps') ? 'error' : ''}
       />
+      <input 
+        type="date" 
+        onChange={(e) => setDate(e.target.valueAsDate)} 
+        value={typeof date === 'string' ? date : date.toISOString().split('T')[0]}
+      />
 
       <button>Add Workout</button>
-      {error && <div className="error">{error}</div>}
+      {errorSet && <div className="error">{errorSet}</div>}
     </form>
   )
 }

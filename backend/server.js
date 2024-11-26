@@ -14,6 +14,7 @@ const app = express();
 app.use(express.json())
 
 app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'unsafe-inline'; img-src 'self' https:; font-src 'self' https://fonts.googleapis.com;");
     console.log(req.path, req.method)
     next()
 })

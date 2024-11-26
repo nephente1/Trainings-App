@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 const kociak = require("../images/kociak.jpg");
 
-export const Bonus = () => {
-  const [seconds, setSeconds] = useState(10);
+export const Profile = () => {
+  const [seconds, setSeconds] = useState(5);
 
   useEffect(() => {
     const timer = seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
@@ -10,7 +10,7 @@ export const Bonus = () => {
   }, [seconds]);
 
 
-  const wynik = <img style={{height: "75vh", margin: "auto", display: "flex"}} src={kociak} />
+  const wynik = <img alt="kot" style={{height: "75vh", margin: "auto", display: "flex"}} src={kociak} />
   
   return (
     <div>

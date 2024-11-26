@@ -1,6 +1,15 @@
 import { createContext, useReducer, useEffect } from 'react';
 
-export const AuthContext = createContext();
+
+interface AuthContextTypes {
+  user: {email: string; token: string},
+  dispatch: (action: any) => void,
+}
+
+export const AuthContext = createContext<AuthContextTypes>({
+  user: {email: '', token: ''},
+  dispatch: () => {},
+});
 
 export const authReducer = (state, action) => {
   switch (action.type) {
@@ -26,8 +35,6 @@ export const AuthContextProvider = ({ children }) => {
       dispatch({ type: 'LOGIN', payload: user})
     }
   }, [])
-
-  console.log('AuthContext state: ', state)
 
   return (
     <AuthContext.Provider value={{...state, dispatch}}>

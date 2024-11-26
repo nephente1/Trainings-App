@@ -24,10 +24,8 @@ export const useSignup = () => {
 
     const json = await response.json();
 
-
     if (!response.ok) {
       setLoading(false);
-      //@ts-ignore
       setError(json.error);
     }
     if (response.ok) {

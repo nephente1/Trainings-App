@@ -28,7 +28,7 @@ header a {
 }
 .pages{
   max-width: 1400px;
-  padding: 20px;
+  padding: 50px;
   margin: 0 auto;
 }
 
@@ -36,7 +36,7 @@ header a {
 .home {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  gap: 100px;
+  gap: 50px;
 }
 .details {
   background: #fff;
@@ -60,6 +60,16 @@ header a {
   position: absolute;
   top: 20px;
   right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: #333;
+}
+.details span:first-of-type{
+  position: absolute;
+  top: 20px;
+  right: 70px;
   cursor: pointer;
   background: #f1f1f1;
   padding: 4px 10px;
