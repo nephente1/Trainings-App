@@ -14,12 +14,18 @@ export interface BackendError {
 }
 
 export const fetchWorkouts = async () => {
-  const response = await axiosInstance.get('/');
-  return response.data;
+  try{
+    const response = await axiosInstance.get('/');
+    return response.data;
+  } catch (error) {
+    console.log("Error:", error.response.data)
+    throw new Error(`Unexpected error occurred ${error}`);
+  }
+  
 }
 
 export const createItemFetchRequest = async (item: WorkoutTypes): Promise<any> => {
-  console.log('item', item)
+
   try {
     const response = await axiosInstance.post('/', item);
 

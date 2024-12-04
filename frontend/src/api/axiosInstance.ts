@@ -7,7 +7,7 @@ const getUser = () => {
 
 // Tworzymy instancję axios z globalnymi ustawieniami
 const axiosInstance = axios.create({
-  baseURL: '/api/workouts'
+  baseURL: 'https://mern-backend-xbfj.onrender.com/api/workouts'
 });
 
 // Ustawiamy token w nagłówkach dla każdej wysyłanej prośby, do tego posłuży interceptor z Axiosa

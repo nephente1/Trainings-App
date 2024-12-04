@@ -6,13 +6,13 @@ import { BackendError, createItemFetchRequest, WorkoutTypes } from '../api/api';
 export const Form = () => {
   const { user } = useAuthContext();
   const [title, setTitle] = useState('')
-  const [load, setLoad] = useState(null)
-  const [reps, setReps] = useState(null)
+  const [load, setLoad] = useState(0)
+  const [reps, setReps] = useState(0)
   const [date, setDate] = useState<Date | string>(() => {
-    // Ustawiamy dzisiejszą datę w formacie 'YYYY-MM-DD'
-    const today = new Date();
-    return today.toISOString().split('T')[0];
-  }
+      // Ustawiamy dzisiejszą datę w formacie 'YYYY-MM-DD'
+      const today = new Date();
+      return today.toISOString().split('T')[0];
+    }
   )
   const [errorSet, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
@@ -24,8 +24,8 @@ export const Form = () => {
       queryClient.invalidateQueries({ queryKey: ['workouts'] })
       setError(null)
       setTitle('')
-      setLoad('')
-      setReps('')
+      setLoad(0)
+      setReps(0)
       setEmptyFields([])
     },
     onError: (error: BackendError) => {
@@ -65,7 +65,7 @@ export const Form = () => {
       <label>Load (in kg):</label>
       <input 
         type="number" 
-        onChange={(e) => setLoad(e.target.value)} 
+        onChange={(e) => setLoad(Number(e.target.value))} 
         value={load}
         className={emptyFields?.includes('load') ? 'error' : ''}
       />
@@ -73,7 +73,7 @@ export const Form = () => {
       <label>Number of Reps:</label>
       <input 
         type="number" 
-        onChange={(e) => setReps(e.target.value)} 
+        onChange={(e) => setReps(parseInt(e.target.value))} 
         value={reps}
         className={emptyFields?.includes('reps') ? 'error' : ''}
       />

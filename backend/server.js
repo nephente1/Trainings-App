@@ -13,8 +13,15 @@ const app = express();
 // middleware
 app.use(express.json())
 
+//"Content-Security-Policy", "default-src 'self';
 app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'unsafe-inline'; img-src 'self' https:; font-src 'self' https://fonts.googleapis.com;");
+  res.setHeader("Content-Security-Policy", "script-src 'self'; style-src 'unsafe-inline'; img-src 'self' https:; font-src 'self' https://fonts.googleapis.com;");
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Zezwól na połączenia z Twojej aplikacji frontendowej
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS'); // Zezwól na określone metody HTTP
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Zezwól na określone nagłówki
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end(); // Zakończ zapytanie preflight z kodem 200
+  }
     console.log(req.path, req.method)
     next()
 })

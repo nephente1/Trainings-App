@@ -5,11 +5,15 @@ import { useQuery } from '@tanstack/react-query';
 
 export const Home = () => {
 	
-	const { data: workouts, isLoading } = useQuery({ 
+	const { data: workouts, isLoading, isError, error } = useQuery({ 
 		queryKey: ['workouts'], 
 		queryFn: fetchWorkouts,
 		staleTime: Infinity, // set data stored in cache for infinity, no repeated request
 	});
+
+	if (isError) {
+		return <div>{error.message}</div>
+	}
 
 	return (
 		<>
