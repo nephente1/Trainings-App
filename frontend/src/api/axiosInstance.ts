@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-// Funkcja do pobierania tokenu z localStorage
+
+// get token from localStorage
 const getUser = () => {
   return JSON.parse(localStorage.getItem('user'))
 };
 
 // Tworzymy instancję axios z globalnymi ustawieniami
 const axiosInstance = axios.create({
-  baseURL: 'https://mern-backend-xbfj.onrender.com/api/workouts'
+  baseURL: `http://localhost:3000/api/workouts/` //dev
+  // baseURL: 'https://mern-backend-xbfj.onrender.com/api/workouts' //prod
 });
 
 // Ustawiamy token w nagłówkach dla każdej wysyłanej prośby, do tego posłuży interceptor z Axiosa

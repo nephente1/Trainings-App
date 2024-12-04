@@ -17,17 +17,3 @@ Your app is ready to be deployed!
 
 ### `npm run dev`
 Starts backend on port 4000
-
-FRONTEND:\
-npm install --save date-fns
-
-BACKEND:\
-mkdir server.js\
-npm init -y\
-npm install express\
-npm install -g nodemon\
-npm install dotenv\
-npm install mongoose\
-npm install bcrypt\
-npm install validator\
-npm install jsonwebtoken
