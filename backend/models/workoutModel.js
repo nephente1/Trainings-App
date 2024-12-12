@@ -8,7 +8,7 @@ const workoutSchema = new Schema({
     required: true
   },
   time: {
-    type: Number,
+    type: String,
     required: true
   },
   distance: {
